@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.paxha.e_sheet.R;
 import com.example.paxha.e_sheet.calculation.list.calculation.CalculationFragment;
+import com.example.paxha.e_sheet.db.DatabaseHelper;
 import com.example.paxha.e_sheet.sheet.SheetModel;
 import com.example.paxha.e_sheet.sheet.create.sheet.CreateSheetFragment;
 import com.example.paxha.e_sheet.sheet.edit.sheet.EditSheetFragment;
@@ -29,6 +31,7 @@ import java.util.ArrayList;
  */
 public class SheetFragment extends Fragment {
 
+    DatabaseHelper db;
     ArrayList<SheetModel> sheetModels;
     ListView lvSheetList;
 
@@ -44,16 +47,9 @@ public class SheetFragment extends Fragment {
 
         lvSheetList = view.findViewById(R.id.lv_sheet_list);
 
-        sheetModels = new ArrayList<>();
-        sheetModels.add(new SheetModel(21, "Sheet no 1"));
-        sheetModels.add(new SheetModel(11, "abc 1"));
-        sheetModels.add(new SheetModel(291, "Sheet abc"));
-        sheetModels.add(new SheetModel(22, "Sheet rck k"));
-        sheetModels.add(new SheetModel(255, "unknowns"));
-        sheetModels.add(new SheetModel(111, "top c"));
-        sheetModels.add(new SheetModel(126, "left right"));
-        sheetModels.add(new SheetModel(563, "end a"));
-        sheetModels.add(new SheetModel(74, "aspenct"));
+        db = new DatabaseHelper(getContext());
+        Log.e("my log", "project id = " + getArguments().getInt("KEY_PROJECT_ID"));
+        sheetModels = db.getAllSheets(getArguments().getInt("KEY_PROJECT_ID"));
 
         SheetAdapter adapter = new SheetAdapter(getContext(), sheetModels);
         lvSheetList.setAdapter(adapter);
@@ -61,7 +57,11 @@ public class SheetFragment extends Fragment {
         lvSheetList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                final SheetModel sheetModel = sheetModels.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putInt("KEY_SHEET_ID", sheetModel.getId());
                 CalculationFragment fragment = new CalculationFragment();
+                fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.constraint_layout, fragment);
                 transaction.addToBackStack(null);

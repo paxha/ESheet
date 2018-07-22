@@ -77,7 +77,7 @@ public class CalculationAdapter extends ArrayAdapter<CalculationModel> {
         viewHolder.tvWidth.setText(calculationModel.getWidthFeet() + "\' " + calculationModel.getWidthInches() + "\"");
         viewHolder.tvHeight.setText(calculationModel.getHeightFeet() + "\' " + calculationModel.getHeightInches() + "\"");
         viewHolder.tvQuantity.setText(calculationModel.getQuantity() + "");
-        viewHolder.tvTotal.setText(calculationModel.getTotal() + "");
+        viewHolder.tvTotal.setText(calculationModel.getTotalFeet() + "\' " + calculationModel.getTotalInches() + "\"");
         viewHolder.tvType.setText(calculationModel.getType());
 
         return convertView;

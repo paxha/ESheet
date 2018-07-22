@@ -6,9 +6,8 @@ public class ProjectModel {
     private String createdAt;
     private String updatedAt;
 
-    ProjectModel(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public  ProjectModel(){
+        // Empty Constructor Required
     }
 
     public int getId() {

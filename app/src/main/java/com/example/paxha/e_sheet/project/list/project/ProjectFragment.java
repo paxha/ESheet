@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.paxha.e_sheet.R;
+import com.example.paxha.e_sheet.db.DatabaseHelper;
 import com.example.paxha.e_sheet.project.ProjectModel;
 import com.example.paxha.e_sheet.project.create.project.CreateProjectFragment;
 import com.example.paxha.e_sheet.project.edit.project.EditProjectFragment;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
  */
 public class ProjectFragment extends Fragment {
 
+    DatabaseHelper db;
     ArrayList<ProjectModel> projectModels;
     ListView lvProjectList;
 
@@ -45,13 +47,8 @@ public class ProjectFragment extends Fragment {
 
         lvProjectList = view.findViewById(R.id.lv_project_list);
 
-        projectModels = new ArrayList<>();
-
-        projectModels.add(new ProjectModel(5, "Android Project"));
-        projectModels.add(new ProjectModel(6, "Google Project"));
-        projectModels.add(new ProjectModel(16, "Microsoft Project"));
-        projectModels.add(new ProjectModel(31, "ESheet Project"));
-        projectModels.add(new ProjectModel(12, "Other Project"));
+        db = new DatabaseHelper(getContext());
+        projectModels = db.getAllProject();
 
         ProjectAdapter projectAdapter = new ProjectAdapter(getContext(), projectModels);
 
@@ -60,7 +57,11 @@ public class ProjectFragment extends Fragment {
         lvProjectList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                final ProjectModel projectModel = projectModels.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putInt("KEY_PROJECT_ID", projectModel.getId());
                 SheetFragment fragment = new SheetFragment();
+                fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.constraint_layout, fragment);
                 transaction.addToBackStack(null);

@@ -3,6 +3,7 @@ package com.example.paxha.e_sheet.calculation;
 public class CalculationModel {
 
     private int id;
+    private int sheet_id;
     private String type;
     private String description;
     private int widthFeet;
@@ -10,20 +11,21 @@ public class CalculationModel {
     private int heightFeet;
     private int heightInches;
     private int quantity;
-    private int total;
-    private String createAt;
+    private int totalFeet;
+    private int totalInches;
+    private String createdAt;
     private String updatedAt;
 
-    CalculationModel(int id, String type, String description, int widthFeet, int widthInches, int heightFeet, int heightInches, int quantity, int total){
-        this.id = id;
-        this.type = type;
-        this.description = description;
-        this.widthFeet = widthFeet;
-        this.widthInches = widthInches;
-        this.heightFeet = heightFeet;
-        this.heightInches = heightInches;
-        this.quantity = quantity;
-        this.total = total;
+    public CalculationModel(){
+        //empty
+    }
+
+    public int getSheet_id() {
+        return sheet_id;
+    }
+
+    public void setSheet_id(int sheet_id) {
+        this.sheet_id = sheet_id;
     }
 
     public int getId() {
@@ -90,20 +92,28 @@ public class CalculationModel {
         this.quantity = quantity;
     }
 
-    public int getTotal() {
-        return total;
+    public void setTotalFeet(int totalFeet) {
+        this.totalFeet = totalFeet;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public int getTotalFeet() {
+        return totalFeet;
     }
 
-    public String getCreateAt() {
-        return createAt;
+    public void setTotalInches(int totalInches) {
+        this.totalInches = totalInches;
     }
 
-    public void setCreateAt(String createAt) {
-        this.createAt = createAt;
+    public int getTotalInches() {
+        return totalInches;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createAt) {
+        this.createdAt = createAt;
     }
 
     public void setUpdatedAt(String updatedAt) {

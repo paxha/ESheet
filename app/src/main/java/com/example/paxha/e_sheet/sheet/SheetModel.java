@@ -3,13 +3,21 @@ package com.example.paxha.e_sheet.sheet;
 public class SheetModel {
 
     private int id;
+    private int projectId;
     private String name;
     private String createdAt;
     private String updatedAt;
 
-    SheetModel(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public SheetModel(){
+        //empty
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 
     public int getId() {

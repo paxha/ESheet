@@ -20,6 +20,7 @@ import com.example.paxha.e_sheet.R;
 import com.example.paxha.e_sheet.calculation.CalculationModel;
 import com.example.paxha.e_sheet.calculation.create.calculation.CreateCalculationFragment;
 import com.example.paxha.e_sheet.calculation.edit.calculation.EditCalculationFragment;
+import com.example.paxha.e_sheet.db.DatabaseHelper;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ import java.util.ArrayList;
  */
 public class CalculationFragment extends Fragment {
 
+    DatabaseHelper db;
     ArrayList<CalculationModel> calculationModels;
     ListView lvCalculationList;
 
@@ -44,17 +46,8 @@ public class CalculationFragment extends Fragment {
 
         lvCalculationList = view.findViewById(R.id.lv_calculation_list);
 
-        calculationModels = new ArrayList<>();
-
-        calculationModels.add(new CalculationModel(5, "add", "description", 2, 2, 5, 2, 2, 12));
-        calculationModels.add(new CalculationModel(15, "add", "abc..", 2, 2, 5, 2, 2, 12));
-        calculationModels.add(new CalculationModel(51, "add", "some", 2, 2, 5, 2, 2, 12));
-        calculationModels.add(new CalculationModel(55, "add", "description", 2, 2, 5, 2, 2, 12));
-        calculationModels.add(new CalculationModel(23, "sub", "sdj", 2, 2, 5, 2, 2, 12));
-        calculationModels.add(new CalculationModel(58, "add", "rott  kcd eeeee kafi aa.", 2, 2, 5, 2, 2, 12));
-        calculationModels.add(new CalculationModel(32, "sub", "fj ckdi  nvcl", 2, 2, 5, 2, 2, 12));
-        calculationModels.add(new CalculationModel(47, "add", "description", 2, 2, 5, 2, 2, 12));
-        calculationModels.add(new CalculationModel(99, "add", "description", 2, 2, 5, 2, 2, 12));
+        db = new DatabaseHelper(getContext());
+        calculationModels = db.getAllCalculations(getArguments().getInt("KEY_SHEET_ID"));
 
         CalculationAdapter adapter = new CalculationAdapter(getContext(), calculationModels);
 
