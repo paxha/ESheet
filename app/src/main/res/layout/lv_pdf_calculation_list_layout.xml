@@ -1,76 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <!--<ScrollView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:fillViewport="true"-->
-    <!--&gt;-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal">-->
-    <!---->
-    <!--</LinearLayout>-->
-
-    <!--</ScrollView>-->
+    <TextView
+        android:id="@+id/tv_serial_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/serial_no"
+        android:textSize="9sp"
+        tools:ignore="SmallSp" />
 
     <TextView
         android:id="@+id/tv_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:layout_weight="5"
+        android:layout_weight="4"
         android:text="@string/description"
-        android:textSize="12sp" />
+        android:textSize="9sp"
+        tools:ignore="SmallSp" />
 
     <TextView
         android:id="@+id/tv_width"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
         android:layout_weight="2"
         android:text="@string/width"
-        android:textSize="12sp" />
+        android:textSize="9sp"
+        tools:ignore="SmallSp" />
 
     <TextView
         android:id="@+id/tv_height"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
         android:layout_weight="2"
         android:text="@string/height"
-        android:textSize="12sp" />
+        android:textSize="9sp"
+        tools:ignore="SmallSp" />
 
     <TextView
         android:id="@+id/tv_quantity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
         android:layout_weight="1"
         android:text="@string/qty"
-        android:textSize="12sp" />
+        android:textSize="9sp"
+        tools:ignore="SmallSp" />
 
     <TextView
         android:id="@+id/tv_total"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
         android:layout_weight="2"
         android:text="@string/total"
-        android:textSize="12sp" />
+        android:textSize="9sp"
+        tools:ignore="SmallSp" />
 
     <TextView
         android:id="@+id/tv_type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:text="@string/type"
-        android:textSize="12sp" />
+        android:textSize="9sp"
+        tools:ignore="SmallSp" />
 
 </LinearLayout>

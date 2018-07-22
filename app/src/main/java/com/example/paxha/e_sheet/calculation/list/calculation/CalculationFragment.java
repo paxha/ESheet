@@ -21,6 +21,7 @@ import com.example.paxha.e_sheet.calculation.CalculationModel;
 import com.example.paxha.e_sheet.calculation.create.calculation.CreateCalculationFragment;
 import com.example.paxha.e_sheet.calculation.edit.calculation.EditCalculationFragment;
 import com.example.paxha.e_sheet.db.DatabaseHelper;
+import com.example.paxha.e_sheet.pdf.PDFGeneratorFragment;
 
 import java.util.ArrayList;
 
@@ -52,14 +53,6 @@ public class CalculationFragment extends Fragment {
         CalculationAdapter adapter = new CalculationAdapter(getContext(), calculationModels);
 
         lvCalculationList.setAdapter(adapter);
-
-        lvCalculationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                final CalculationModel calculationModel = calculationModels.get(position);
-                Toast.makeText(getContext(), "ID = " + calculationModel.getId(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
         lvCalculationList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -108,6 +101,21 @@ public class CalculationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 CreateCalculationFragment fragment = new CreateCalculationFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("KEY_SHEET_ID", getArguments().getInt("KEY_SHEET_ID"));
+                fragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.constraint_layout, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        FloatingActionButton fabDownload = view.findViewById(R.id.fab_download);
+        fabDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PDFGeneratorFragment fragment = new PDFGeneratorFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("KEY_SHEET_ID", getArguments().getInt("KEY_SHEET_ID"));
                 fragment.setArguments(bundle);

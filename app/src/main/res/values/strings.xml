@@ -23,9 +23,10 @@
     <string name="total">Total</string>
     <string name="type">Type</string>
     <string name="update_calculation">Update Calculation</string>
+    <string name="serial_no">S#</string>
 
     <string-array name="calculation_type">
         <item>Add</item>
-        <item>Subtract</item>
+        <item>Sub</item>
     </string-array>
 </resources>
