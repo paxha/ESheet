@@ -48,7 +48,6 @@ public class SheetFragment extends Fragment {
         lvSheetList = view.findViewById(R.id.lv_sheet_list);
 
         db = new DatabaseHelper(getContext());
-        Log.e("my log", "project id = " + getArguments().getInt("KEY_PROJECT_ID"));
         sheetModels = db.getAllSheets(getArguments().getInt("KEY_PROJECT_ID"));
 
         SheetAdapter adapter = new SheetAdapter(getContext(), sheetModels);
@@ -111,7 +110,10 @@ public class SheetFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("KEY_PROJECT_ID", getArguments().getInt("KEY_PROJECT_ID"));
                 CreateSheetFragment fragment = new CreateSheetFragment();
+                fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.constraint_layout, fragment);
                 transaction.addToBackStack(null);

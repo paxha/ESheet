@@ -75,15 +75,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TABLE_CALCULATIONS + "("
             + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_SHEET_ID + " INTEGER REFERENCES " + TABLE_SHEET + " ON DELETE CASCADE,"
-            + KEY_TYPE + " TEXT DEFAULT('add'),"
+            + KEY_TYPE + " TEXT DEFAULT('Add'),"
             + KEY_DESCRIPTION + " TEXT,"
-            + KEY_HEIGHT_FEET + " INTEGER,"
-            + KEY_HEIGHT_INCHES + " INTEGER,"
-            + KEY_WIDTH_FEET + " INTEGER,"
-            + KEY_WIDTH_INCHES + " INTEGER,"
+            + KEY_HEIGHT_FEET + " INTEGER DEFAULT(0),"
+            + KEY_HEIGHT_INCHES + " INTEGER DEFAULT(0),"
+            + KEY_WIDTH_FEET + " INTEGER DEFAULT(0),"
+            + KEY_WIDTH_INCHES + " INTEGER DEFAULT(0),"
             + KEY_QUANTITY + " INTEGER DEFAULT(1),"
-            + KEY_TOTAL_FEET + " INTEGER,"
-            + KEY_TOTAL_INCHES + " INTEGER,"
+            + KEY_TOTAL_FEET + " INTEGER DEFAULT(0),"
+            + KEY_TOTAL_INCHES + " INTEGER DEFAULT(0),"
             + KEY_CREATED_AT + " DATETIME,"
             + KEY_UPDATED_AT + " DATETIME"
             + ")";
@@ -91,19 +91,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        Log.e("myLog", "Database named (" + DATABASE_NAME + ") created.");
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("PRAGMA foreign_keys=ON;");
-        Log.e("myLog", "Foreign key on");
         sqLiteDatabase.execSQL(CREATE_TABLE_PROJECT);
-        Log.e("myLog", CREATE_TABLE_PROJECT);
         sqLiteDatabase.execSQL(CREATE_TABLE_SHEET);
-        Log.e("myLog", CREATE_TABLE_SHEET);
         sqLiteDatabase.execSQL(CREATE_TABLE_CALCULATION);
-        Log.e("myLog", CREATE_TABLE_CALCULATION);
     }
 
     @Override

@@ -73,6 +73,9 @@ public class CalculationFragment extends Fragment {
                         switch (item.getTitle().toString()) {
                             case "Edit":
                                 EditCalculationFragment fragment = new EditCalculationFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("KEY_SHEET_ID", getArguments().getInt("KEY_SHEET_ID"));
+                                fragment.setArguments(bundle);
                                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                 transaction.replace(R.id.constraint_layout, fragment);
                                 transaction.addToBackStack(null);
@@ -104,6 +107,9 @@ public class CalculationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 CreateCalculationFragment fragment = new CreateCalculationFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("KEY_SHEET_ID", getArguments().getInt("KEY_SHEET_ID"));
+                fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.constraint_layout, fragment);
                 transaction.addToBackStack(null);
