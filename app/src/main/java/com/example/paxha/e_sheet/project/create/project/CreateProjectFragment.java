@@ -3,8 +3,6 @@ package com.example.paxha.e_sheet.project.create.project;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import android.widget.EditText;
 import com.example.paxha.e_sheet.R;
 import com.example.paxha.e_sheet.db.DatabaseHelper;
 import com.example.paxha.e_sheet.project.ProjectModel;
-import com.example.paxha.e_sheet.project.list.project.ProjectFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,12 +40,7 @@ public class CreateProjectFragment extends Fragment {
                 ProjectModel projectModel = new ProjectModel();
                 projectModel.setName(etProjectName.getText().toString().trim());
                 db.createProject(projectModel);
-                ProjectFragment fragment = new ProjectFragment();
-                FragmentManager manager = getFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.constraint_layout, fragment);
-                transaction.remove(CreateProjectFragment.this);
-                transaction.commit();
+                getFragmentManager().popBackStackImmediate();
             }
         });
         return view;

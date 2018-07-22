@@ -6,7 +6,7 @@ public class ProjectModel {
     private String createdAt;
     private String updatedAt;
 
-    public  ProjectModel(){
+    public ProjectModel() {
         // Empty Constructor Required
     }
 

@@ -7,8 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 public class CalculationAdapter extends ArrayAdapter<CalculationModel> {
 
     private ArrayList<CalculationModel> calculationModels;
-    private Context context;
 
     private static class ViewHolder {
         TextView tvDescription;
@@ -35,10 +32,7 @@ public class CalculationAdapter extends ArrayAdapter<CalculationModel> {
     CalculationAdapter(@NonNull Context context, ArrayList<CalculationModel> calculationModels) {
         super(context, R.layout.lv_calculation_list_layout, calculationModels);
         this.calculationModels = calculationModels;
-        this.context = context;
     }
-
-    private int lastPosition = -1;
 
     @SuppressLint("SetTextI18n")
     @NonNull
@@ -46,8 +40,6 @@ public class CalculationAdapter extends ArrayAdapter<CalculationModel> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         CalculationModel calculationModel = calculationModels.get(position);
         ViewHolder viewHolder;
-
-        final View view;
 
         if (convertView == null) {
             viewHolder = new CalculationAdapter.ViewHolder();
@@ -61,17 +53,9 @@ public class CalculationAdapter extends ArrayAdapter<CalculationModel> {
             viewHolder.tvType = convertView.findViewById(R.id.tv_type);
             viewHolder.tvWidth = convertView.findViewById(R.id.tv_width);
 
-            view = convertView;
             convertView.setTag(viewHolder);
-        } else {
+        } else
             viewHolder = (ViewHolder) convertView.getTag();
-            view = convertView;
-        }
-
-        Animation animation = AnimationUtils.loadAnimation(context, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
-        view.startAnimation(animation);
-
-        lastPosition = position;
 
         viewHolder.tvDescription.setText(calculationModel.getDescription());
         viewHolder.tvWidth.setText(calculationModel.getWidthFeet() + "\' " + calculationModel.getWidthInches() + "\"");

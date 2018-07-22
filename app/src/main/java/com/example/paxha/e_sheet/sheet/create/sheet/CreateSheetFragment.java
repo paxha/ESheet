@@ -3,10 +3,6 @@ package com.example.paxha.e_sheet.sheet.create.sheet;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.SharedElementCallback;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +12,6 @@ import android.widget.EditText;
 import com.example.paxha.e_sheet.R;
 import com.example.paxha.e_sheet.db.DatabaseHelper;
 import com.example.paxha.e_sheet.sheet.SheetModel;
-import com.example.paxha.e_sheet.sheet.list.sheet.SheetFragment;
 
 /**
  * A simple {@link Fragment} subclass.

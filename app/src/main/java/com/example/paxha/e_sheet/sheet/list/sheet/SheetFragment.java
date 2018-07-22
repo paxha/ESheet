@@ -8,14 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.paxha.e_sheet.R;
 import com.example.paxha.e_sheet.calculation.list.calculation.CalculationFragment;
@@ -80,6 +78,9 @@ public class SheetFragment extends Fragment {
                         switch (item.getTitle().toString()) {
                             case "Edit":
                                 EditSheetFragment fragment = new EditSheetFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("KEY_SHEET_ID", sheetModel.getId());
+                                fragment.setArguments(bundle);
                                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                 transaction.replace(R.id.constraint_layout, fragment);
                                 transaction.addToBackStack(null);
@@ -92,7 +93,8 @@ public class SheetFragment extends Fragment {
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                Toast.makeText(getContext(), "Deleting this sheet by ID = " + sheetModel.getId(), Toast.LENGTH_SHORT).show();
+                                                db.deleteSheet(sheetModel.getId());
+                                                getFragmentManager().beginTransaction().detach(SheetFragment.this).attach(SheetFragment.this).commit();
                                             }
                                         })
                                         .show();

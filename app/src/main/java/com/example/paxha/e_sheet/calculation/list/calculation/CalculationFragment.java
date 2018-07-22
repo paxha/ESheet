@@ -74,7 +74,7 @@ public class CalculationFragment extends Fragment {
                             case "Edit":
                                 EditCalculationFragment fragment = new EditCalculationFragment();
                                 Bundle bundle = new Bundle();
-                                bundle.putInt("KEY_SHEET_ID", getArguments().getInt("KEY_SHEET_ID"));
+                                bundle.putInt("KEY_CALCULATION_ID", calculationModel.getId());
                                 fragment.setArguments(bundle);
                                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                 transaction.replace(R.id.constraint_layout, fragment);
@@ -88,7 +88,8 @@ public class CalculationFragment extends Fragment {
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                Toast.makeText(getContext(), "Deleting this calculation by ID = " + calculationModel.getId(), Toast.LENGTH_SHORT).show();
+                                                db.deleteCalculation(calculationModel.getId());
+                                                getFragmentManager().beginTransaction().detach(CalculationFragment.this).attach(CalculationFragment.this).commit();
                                             }
                                         })
                                         .show();
@@ -116,7 +117,6 @@ public class CalculationFragment extends Fragment {
                 transaction.commit();
             }
         });
-
 
         return view;
     }

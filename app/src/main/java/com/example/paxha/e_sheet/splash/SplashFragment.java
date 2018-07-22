@@ -6,17 +6,12 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.paxha.e_sheet.R;
-import com.example.paxha.e_sheet.calculation.CalculationModel;
-import com.example.paxha.e_sheet.db.DatabaseHelper;
-import com.example.paxha.e_sheet.project.ProjectModel;
 import com.example.paxha.e_sheet.project.list.project.ProjectFragment;
-import com.example.paxha.e_sheet.sheet.SheetModel;
 
 /**
  * A simple {@link Fragment} subclass.

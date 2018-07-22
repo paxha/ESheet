@@ -1,5 +1,6 @@
 package com.example.paxha.e_sheet.db;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -24,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table Names
     private static final String TABLE_PROJECT = "projects";
     private static final String TABLE_SHEET = "sheets";
-    private static final String TABLE_CALCULATIONS = "calculations";
+    private static final String TABLE_CALCULATION = "calculations";
 
     // Common column names
     private static final String KEY_ID = "id";
@@ -72,7 +73,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // CALCULATION table create statement
     private static final String CREATE_TABLE_CALCULATION = "CREATE TABLE "
-            + TABLE_CALCULATIONS + "("
+            + TABLE_CALCULATION + "("
             + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_SHEET_ID + " INTEGER REFERENCES " + TABLE_SHEET + " ON DELETE CASCADE,"
             + KEY_TYPE + " TEXT DEFAULT('Add'),"
@@ -105,12 +106,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJECT);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SHEET);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_CALCULATIONS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_CALCULATION);
 
         onCreate(sqLiteDatabase);
     }
 
-    public int createProject(ProjectModel projectModel) {
+    public void createProject(ProjectModel projectModel) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -118,18 +119,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_CREATED_AT, "CURRENT_TIMESTAMP");
         values.put(KEY_UPDATED_AT, "CURRENT_TIMESTAMP");
 
-        return (int) sqLiteDatabase.insert(TABLE_PROJECT, null, values);
+        sqLiteDatabase.insert(TABLE_PROJECT, null, values);
     }
 
     public ProjectModel getProject(int id) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String selectQuery = "SELECT  * FROM " + TABLE_PROJECT + " WHERE " + KEY_ID + " = " + id;
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
+        @SuppressLint("Recycle") Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
 
         if (cursor != null)
             cursor.moveToFirst();
 
         ProjectModel projectModel = new ProjectModel();
+        assert cursor != null;
         projectModel.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
         projectModel.setName(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME)));
         projectModel.setCreatedAt(cursor.getString(cursor.getColumnIndex(KEY_CREATED_AT)));
@@ -143,7 +145,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<ProjectModel> projectModels = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_PROJECT;
 
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
+        @SuppressLint("Recycle") Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst())
             do {
@@ -173,7 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.delete(TABLE_PROJECT, KEY_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
-    public int createSheet(SheetModel sheetModel, int project_id) {
+    public void createSheet(SheetModel sheetModel, int project_id) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -181,18 +183,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_SHEET_NAME, sheetModel.getName());
         values.put(KEY_CREATED_AT, "CURRENT_TIMESTAMP");
         values.put(KEY_UPDATED_AT, "CURRENT_TIMESTAMP");
-        return (int) sqLiteDatabase.insert(TABLE_SHEET, null, values);
+        sqLiteDatabase.insert(TABLE_SHEET, null, values);
     }
 
     public SheetModel getSheet(int id) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         String selectQuery = "SELECT  * FROM " + TABLE_SHEET + " WHERE " + KEY_ID + " = " + id;
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
+        @SuppressLint("Recycle") Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
 
         if (cursor != null)
             cursor.moveToFirst();
 
         SheetModel sheetModel = new SheetModel();
+        assert cursor != null;
         sheetModel.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
         sheetModel.setName(cursor.getString(cursor.getColumnIndex(KEY_SHEET_NAME)));
         sheetModel.setCreatedAt(cursor.getString(cursor.getColumnIndex(KEY_CREATED_AT)));
@@ -206,7 +209,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<SheetModel> sheetModels = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_SHEET + " WHERE " + KEY_PROJECT_ID + " = " + projectId;
 
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
+        @SuppressLint("Recycle") Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst())
             do {
@@ -254,18 +257,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_CREATED_AT, "CURRENT_TIMESTAMP");
         values.put(KEY_UPDATED_AT, "CURRENT_TIMESTAMP");
 
-        sqLiteDatabase.insert(TABLE_CALCULATIONS, null, values);
+        sqLiteDatabase.insert(TABLE_CALCULATION, null, values);
     }
 
     public CalculationModel getCalculation(int id) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        String selectQuery = "SELECT  * FROM " + TABLE_CALCULATIONS + " WHERE " + KEY_ID + " = " + id;
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
+        String selectQuery = "SELECT  * FROM " + TABLE_CALCULATION + " WHERE " + KEY_ID + " = " + id;
+        @SuppressLint("Recycle") Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
 
         if (cursor != null)
             cursor.moveToFirst();
 
         CalculationModel calculationModel = new CalculationModel();
+        assert cursor != null;
         calculationModel.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
         calculationModel.setSheet_id(cursor.getInt(cursor.getColumnIndex(KEY_SHEET_ID)));
         calculationModel.setType(cursor.getString(cursor.getColumnIndex(KEY_TYPE)));
@@ -287,9 +291,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList<CalculationModel> getAllCalculations(int sheetId) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         ArrayList<CalculationModel> calculationModels = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_CALCULATIONS + " WHERE " + KEY_SHEET_ID + " = " + sheetId;
+        String selectQuery = "SELECT  * FROM " + TABLE_CALCULATION + " WHERE " + KEY_SHEET_ID + " = " + sheetId;
 
-        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
+        @SuppressLint("Recycle") Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst())
             do {
@@ -316,6 +320,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void updateCalculation(CalculationModel calculationModel) {
+        Log.e("my log", "updating calculation on id = " + calculationModel.getId());
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -330,12 +335,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_TOTAL_INCHES, calculationModel.getTotalInches());
         values.put(KEY_UPDATED_AT, "CURRENT_TIMESTAMP");
 
-        sqLiteDatabase.update(TABLE_CALCULATIONS, values, KEY_ID + " = ?", new String[]{String.valueOf(calculationModel.getId())});
+        long result = sqLiteDatabase.update(TABLE_CALCULATION, values, KEY_ID + " = ?", new String[]{String.valueOf(calculationModel.getId())});
+        Log.e("my log", result + " = result");
+        Log.e("my log", "calculation updated description = " + calculationModel.getDescription());
     }
 
     public void deleteCalculation(int id) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.delete(TABLE_CALCULATIONS, KEY_ID + " = ?", new String[]{String.valueOf(id)});
+        sqLiteDatabase.delete(TABLE_CALCULATION, KEY_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
 }

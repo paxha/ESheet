@@ -16,7 +16,7 @@
         android:inputType="text" />
 
     <Button
-        android:id="@+id/btn_update_project"
+        android:id="@+id/button_update_project"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/update_project" />

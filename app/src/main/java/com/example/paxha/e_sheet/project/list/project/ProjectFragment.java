@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.paxha.e_sheet.R;
 import com.example.paxha.e_sheet.db.DatabaseHelper;
@@ -81,6 +80,9 @@ public class ProjectFragment extends Fragment {
                         switch (item.getTitle().toString()) {
                             case "Edit":
                                 EditProjectFragment fragment = new EditProjectFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("KEY_PROJECT_ID", projectModel.getId());
+                                fragment.setArguments(bundle);
                                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                 transaction.replace(R.id.constraint_layout, fragment);
                                 transaction.addToBackStack(null);
@@ -93,7 +95,8 @@ public class ProjectFragment extends Fragment {
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                Toast.makeText(getContext(), "Deleting this project by ID = " + projectModel.getId(), Toast.LENGTH_SHORT).show();
+                                                db.deleteProject(projectModel.getId());
+                                                getFragmentManager().beginTransaction().detach(ProjectFragment.this).attach(ProjectFragment.this).commit();
                                             }
                                         })
                                         .show();
