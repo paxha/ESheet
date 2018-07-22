@@ -1,4 +1,4 @@
-package com.example.paxha.e_sheet.calculation.list.calculation;
+package com.example.paxha.e_sheet.calculation;
 
 public class CalculationModel {
 
@@ -11,6 +11,8 @@ public class CalculationModel {
     private int heightInches;
     private int quantity;
     private int total;
+    private String createAt;
+    private String updatedAt;
 
     CalculationModel(int id, String type, String description, int widthFeet, int widthInches, int heightFeet, int heightInches, int quantity, int total){
         this.id = id;
@@ -95,4 +97,21 @@ public class CalculationModel {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
 }
