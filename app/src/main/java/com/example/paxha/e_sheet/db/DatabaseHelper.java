@@ -111,7 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void createProject(ProjectModel projectModel) {
+    public int createProject(ProjectModel projectModel) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_CREATED_AT, "CURRENT_TIMESTAMP");
         values.put(KEY_UPDATED_AT, "CURRENT_TIMESTAMP");
 
-        sqLiteDatabase.insert(TABLE_PROJECT, null, values);
+        return (int) sqLiteDatabase.insert(TABLE_PROJECT, null, values);
     }
 
     public ProjectModel getProject(int id) {
