@@ -175,7 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.delete(TABLE_PROJECT, KEY_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
-    public void createSheet(SheetModel sheetModel, int project_id) {
+    public int createSheet(SheetModel sheetModel, int project_id) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -183,7 +183,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_SHEET_NAME, sheetModel.getName());
         values.put(KEY_CREATED_AT, "CURRENT_TIMESTAMP");
         values.put(KEY_UPDATED_AT, "CURRENT_TIMESTAMP");
-        sqLiteDatabase.insert(TABLE_SHEET, null, values);
+
+        return (int) sqLiteDatabase.insert(TABLE_SHEET, null, values);
     }
 
     public SheetModel getSheet(int id) {
@@ -226,13 +227,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sheetModels;
     }
 
-    public void updateSheet(SheetModel sheetModel) {
+    public int updateSheet(SheetModel sheetModel) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_SHEET_NAME, sheetModel.getName());
         values.put(KEY_UPDATED_AT, "CURRENT_TIMESTAMP");
-        sqLiteDatabase.update(TABLE_SHEET, values, KEY_ID + " = ?", new String[]{String.valueOf(sheetModel.getId())});
+
+        return sqLiteDatabase.update(TABLE_SHEET, values, KEY_ID + " = ?", new String[]{String.valueOf(sheetModel.getId())});
     }
 
     public void deleteSheet(int id) {

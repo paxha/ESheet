@@ -4,7 +4,7 @@ import com.example.paxha.e_sheet.db.DatabaseHelper;
 
 public interface ProjectInteractor {
 
-    interface onCreateProjectFinishListener {
+    interface onFinishListener {
 
         void onProjectNameError(String message);
 
@@ -14,8 +14,8 @@ public interface ProjectInteractor {
 
     }
 
-    void createProject(String projectName, DatabaseHelper db, onCreateProjectFinishListener listener);
+    void createProject(String projectName, DatabaseHelper db, onFinishListener listener);
 
-    void updateProject(int id, String projectName, DatabaseHelper db, onCreateProjectFinishListener listener);
+    void updateProject(int id, String projectName, DatabaseHelper db, onFinishListener listener);
 
 }

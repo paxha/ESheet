@@ -1,24 +1,35 @@
 package com.example.paxha.e_sheet.sheet.edit.sheet;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.paxha.e_sheet.R;
 import com.example.paxha.e_sheet.db.DatabaseHelper;
 import com.example.paxha.e_sheet.sheet.SheetModel;
+import com.example.paxha.e_sheet.sheet.SheetPresenter;
+import com.example.paxha.e_sheet.sheet.SheetPresenterImpl;
+import com.example.paxha.e_sheet.sheet.SheetView;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EditSheetFragment extends Fragment {
+public class EditSheetFragment extends Fragment implements SheetView {
 
     DatabaseHelper db;
+    EditText etSheetName;
+    ProgressBar progressBar;
+    SheetPresenter presenter;
 
     public EditSheetFragment() {
         // Required empty public constructor
@@ -27,28 +38,66 @@ public class EditSheetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_sheet, container, false);
 
         db = new DatabaseHelper(getContext());
-        SheetModel sheetModel = db.getSheet(getArguments().getInt("KEY_SHEET_ID"));
+        final SheetModel sheetModel = db.getSheet(getArguments().getInt("KEY_SHEET_ID"));
 
-        final EditText etSheetName = view.findViewById(R.id.et_sheet_name);
+        etSheetName = view.findViewById(R.id.et_sheet_name);
+        progressBar = view.findViewById(R.id.progress_bar);
+
         etSheetName.setText(sheetModel.getName());
 
         Button buttonUpdateSheet = view.findViewById(R.id.button_update_sheet);
         buttonUpdateSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SheetModel sheetModel = new SheetModel();
-                sheetModel.setId(getArguments().getInt("KEY_SHEET_ID"));
-                sheetModel.setName(etSheetName.getText().toString().trim());
-                db.updateSheet(sheetModel);
-                getFragmentManager().popBackStackImmediate();
+                presenter = new SheetPresenterImpl(EditSheetFragment.this);
+                presenter.onUpdateSheet(sheetModel.getId(), etSheetName.getText().toString().trim(), db);
             }
         });
 
         return view;
     }
 
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setSheetNameError(String message) {
+        etSheetName.setError(message);
+    }
+
+    @Override
+    public void navigateToNext() {
+        hideKeyboard(getContext());
+        getFragmentManager().popBackStackImmediate();
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    void hideKeyboard(Context context) {
+        InputMethodManager manager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = ((Activity) context).getCurrentFocus();
+        if (view == null)
+            return;
+        assert manager != null;
+        manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+    }
 }

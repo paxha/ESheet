@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class ProjectInteractorImpl implements ProjectInteractor {
     @Override
-    public void createProject(String projectName, DatabaseHelper db, onCreateProjectFinishListener listener) {
+    public void createProject(String projectName, DatabaseHelper db, onFinishListener listener) {
         Pattern pattern = Pattern.compile("[a-zA-Z0-9!@#$%^&*()? ]*");
         if (TextUtils.isEmpty(projectName))
             listener.onProjectNameError("Project name is empty");
@@ -26,7 +26,7 @@ public class ProjectInteractorImpl implements ProjectInteractor {
     }
 
     @Override
-    public void updateProject(int id, String projectName, DatabaseHelper db, onCreateProjectFinishListener listener) {
+    public void updateProject(int id, String projectName, DatabaseHelper db, onFinishListener listener) {
         Pattern pattern = Pattern.compile("[a-zA-Z0-9!@#$%^&*()? ]*");
         if (TextUtils.isEmpty(projectName))
             listener.onProjectNameError("Project name is empty");

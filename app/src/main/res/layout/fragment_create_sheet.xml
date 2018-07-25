@@ -4,21 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     tools:context=".sheet.create.sheet.CreateSheetFragment">
 
-    <EditText
-        android:id="@+id/et_sheet_name"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/abc"
-        android:inputType="text" />
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:ignore="UselessParent">
 
-    <Button
-        android:id="@+id/button_create_sheet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/create_sheet" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <EditText
+                android:id="@+id/et_sheet_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/abc"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/button_create_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/create_sheet" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
