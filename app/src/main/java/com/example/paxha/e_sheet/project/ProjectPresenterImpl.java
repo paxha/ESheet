@@ -1,20 +1,25 @@
-package com.example.paxha.e_sheet.project.create.project;
+package com.example.paxha.e_sheet.project;
 
 import com.example.paxha.e_sheet.db.DatabaseHelper;
 
-public class CreateProjectPresenterImpl implements CreateProjectPresenter, CreateProjectInteractor.onCreateProjectFinishListener {
+public class ProjectPresenterImpl implements ProjectPresenter, ProjectInteractor.onCreateProjectFinishListener {
 
-    private CreateProjectView view;
-    private CreateProjectInteractor interactor;
+    private ProjectView view;
+    private ProjectInteractor interactor;
 
-    CreateProjectPresenterImpl(CreateProjectView view) {
+    public ProjectPresenterImpl(ProjectView view) {
         this.view = view;
-        interactor = new CreateProjectInteractorImpl();
+        interactor = new ProjectInteractorImpl();
     }
 
     @Override
-    public void onValidate(String projectName, DatabaseHelper db) {
+    public void onCreateProject(String projectName, DatabaseHelper db) {
         interactor.createProject(projectName, db, this);
+    }
+
+    @Override
+    public void onUpdateProject(int id, String projectName, DatabaseHelper db) {
+        interactor.updateProject(id, projectName, db, this);
     }
 
     @Override

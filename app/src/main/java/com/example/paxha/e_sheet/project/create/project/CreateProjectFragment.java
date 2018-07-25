@@ -1,11 +1,14 @@
 package com.example.paxha.e_sheet.project.create.project;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -13,22 +16,24 @@ import android.widget.Toast;
 
 import com.example.paxha.e_sheet.R;
 import com.example.paxha.e_sheet.db.DatabaseHelper;
+import com.example.paxha.e_sheet.project.ProjectPresenter;
+import com.example.paxha.e_sheet.project.ProjectPresenterImpl;
+import com.example.paxha.e_sheet.project.ProjectView;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CreateProjectFragment extends Fragment implements CreateProjectView {
+public class CreateProjectFragment extends Fragment implements ProjectView {
 
     DatabaseHelper db;
     EditText etProjectName;
     ProgressBar progressBar;
-    CreateProjectPresenter presenter;
+    ProjectPresenter presenter;
     View view;
 
     public CreateProjectFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,8 +48,8 @@ public class CreateProjectFragment extends Fragment implements CreateProjectView
         buttonCreateProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter = new CreateProjectPresenterImpl(CreateProjectFragment.this);
-                presenter.onValidate(etProjectName.getText().toString().trim(), db);
+                presenter = new ProjectPresenterImpl(CreateProjectFragment.this);
+                presenter.onCreateProject(etProjectName.getText().toString().trim(), db);
             }
         });
         return view;
@@ -67,6 +72,7 @@ public class CreateProjectFragment extends Fragment implements CreateProjectView
 
     @Override
     public void navigateToNext() {
+        hideKeyboard(getContext());
         getFragmentManager().popBackStackImmediate();
     }
 
@@ -79,5 +85,14 @@ public class CreateProjectFragment extends Fragment implements CreateProjectView
     public void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
+    }
+
+    void hideKeyboard(Context context) {
+        InputMethodManager manager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = ((Activity) context).getCurrentFocus();
+        if (view == null)
+            return;
+        assert manager != null;
+        manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

@@ -8,17 +8,36 @@
     android:orientation="vertical"
     tools:context=".project.edit.project.EditProjectFragment">
 
-    <EditText
-        android:id="@+id/et_project_name"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/abc"
-        android:inputType="text" />
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:ignore="UselessParent">
 
-    <Button
-        android:id="@+id/button_update_project"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/update_project" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_project_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/abc"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/button_update_project"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/update_project" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

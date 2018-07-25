@@ -33,11 +33,9 @@ public class ProjectFragment extends Fragment {
     ArrayList<ProjectModel> projectModels;
     ListView lvProjectList;
 
-
     public ProjectFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

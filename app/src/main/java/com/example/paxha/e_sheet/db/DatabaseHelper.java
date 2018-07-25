@@ -161,13 +161,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return projectModels;
     }
 
-    public void updateProject(ProjectModel projectModel) {
+    public int updateProject(ProjectModel projectModel) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_PROJECT_NAME, projectModel.getName());
         values.put(KEY_UPDATED_AT, "CURRENT_TIMESTAMP");
-        sqLiteDatabase.update(TABLE_PROJECT, values, KEY_ID + " = ?", new String[]{String.valueOf(projectModel.getId())});
+        return sqLiteDatabase.update(TABLE_PROJECT, values, KEY_ID + " = ?", new String[]{String.valueOf(projectModel.getId())});
     }
 
     public void deleteProject(int id) {
