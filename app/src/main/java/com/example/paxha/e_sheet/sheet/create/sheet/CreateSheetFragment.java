@@ -40,6 +40,7 @@ public class CreateSheetFragment extends Fragment implements SheetView {
         View view = inflater.inflate(R.layout.fragment_create_sheet, container, false);
 
         db = new DatabaseHelper(getContext());
+        presenter = new SheetPresenterImpl(CreateSheetFragment.this);
 
         etSheetName = view.findViewById(R.id.et_sheet_name);
         progressBar = view.findViewById(R.id.progress_bar);
@@ -48,7 +49,6 @@ public class CreateSheetFragment extends Fragment implements SheetView {
         buttonCreateSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter = new SheetPresenterImpl(CreateSheetFragment.this);
                 presenter.onCreateSheet(getArguments().getInt("KEY_PROJECT_ID"), etSheetName.getText().toString().trim(), db);
             }
         });
