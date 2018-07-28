@@ -90,10 +90,4 @@ public class CreateSheetFragment extends Fragment implements SheetView {
         assert manager != null;
         manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.onDestroy();
-    }
 }

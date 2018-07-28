@@ -96,7 +96,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("PRAGMA foreign_keys=ON;");
         sqLiteDatabase.execSQL(CREATE_TABLE_PROJECT);
         sqLiteDatabase.execSQL(CREATE_TABLE_SHEET);
         sqLiteDatabase.execSQL(CREATE_TABLE_CALCULATION);
@@ -109,6 +108,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_CALCULATION);
 
         onCreate(sqLiteDatabase);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.execSQL("PRAGMA foreign_keys=ON");
     }
 
     public int createProject(ProjectModel projectModel) {
