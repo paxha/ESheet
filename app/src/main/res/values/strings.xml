@@ -24,6 +24,8 @@
     <string name="type">Type</string>
     <string name="update_calculation">Update Calculation</string>
     <string name="serial_no">S#</string>
+    <string name="project_name">Project Name</string>
+    <string name="sheet_name">Sheet Name</string>
 
     <string-array name="calculation_type">
         <item>Add</item>

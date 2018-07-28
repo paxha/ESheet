@@ -18,17 +18,34 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/et_project_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/abc"
-                android:inputType="text" />
+                android:layout_margin="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/project_name"
+                    android:textColor="#009688"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+                <EditText
+                    android:id="@+id/et_project_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/abc"
+                    android:inputType="text" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/button_create_project"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="@string/create_project" />
 
             <ProgressBar

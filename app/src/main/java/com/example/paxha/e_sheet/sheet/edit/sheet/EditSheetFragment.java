@@ -41,6 +41,8 @@ public class EditSheetFragment extends Fragment implements SheetView {
         View view = inflater.inflate(R.layout.fragment_edit_sheet, container, false);
 
         db = new DatabaseHelper(getContext());
+        presenter = new SheetPresenterImpl(EditSheetFragment.this);
+
         final SheetModel sheetModel = db.getSheet(getArguments().getInt("KEY_SHEET_ID"));
 
         etSheetName = view.findViewById(R.id.et_sheet_name);
@@ -52,7 +54,6 @@ public class EditSheetFragment extends Fragment implements SheetView {
         buttonUpdateSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter = new SheetPresenterImpl(EditSheetFragment.this);
                 presenter.onUpdateSheet(sheetModel.getId(), etSheetName.getText().toString().trim(), db);
             }
         });

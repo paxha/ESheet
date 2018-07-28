@@ -247,7 +247,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.delete(TABLE_SHEET, KEY_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
-    public void createCalculation(CalculationModel calculationModel, int sheetId) {
+    public int createCalculation(CalculationModel calculationModel, int sheetId) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -264,7 +264,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_CREATED_AT, "CURRENT_TIMESTAMP");
         values.put(KEY_UPDATED_AT, "CURRENT_TIMESTAMP");
 
-        sqLiteDatabase.insert(TABLE_CALCULATION, null, values);
+        return (int) sqLiteDatabase.insert(TABLE_CALCULATION, null, values);
     }
 
     public CalculationModel getCalculation(int id) {
@@ -326,7 +326,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return calculationModels;
     }
 
-    public void updateCalculation(CalculationModel calculationModel) {
+    public int updateCalculation(CalculationModel calculationModel) {
         Log.e("my log", "updating calculation on id = " + calculationModel.getId());
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
@@ -342,9 +342,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_TOTAL_INCHES, calculationModel.getTotalInches());
         values.put(KEY_UPDATED_AT, "CURRENT_TIMESTAMP");
 
-        long result = sqLiteDatabase.update(TABLE_CALCULATION, values, KEY_ID + " = ?", new String[]{String.valueOf(calculationModel.getId())});
-        Log.e("my log", result + " = result");
-        Log.e("my log", "calculation updated description = " + calculationModel.getDescription());
+        return sqLiteDatabase.update(TABLE_CALCULATION, values, KEY_ID + " = ?", new String[]{String.valueOf(calculationModel.getId())});
     }
 
     public void deleteCalculation(int id) {

@@ -41,6 +41,7 @@ public class CreateProjectFragment extends Fragment implements ProjectView {
         view = inflater.inflate(R.layout.fragment_create_project, container, false);
 
         db = new DatabaseHelper(getContext());
+        presenter = new ProjectPresenterImpl(CreateProjectFragment.this);
 
         etProjectName = view.findViewById(R.id.et_project_name);
         progressBar = view.findViewById(R.id.progress_bar);
@@ -48,7 +49,6 @@ public class CreateProjectFragment extends Fragment implements ProjectView {
         buttonCreateProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter = new ProjectPresenterImpl(CreateProjectFragment.this);
                 presenter.onCreateProject(etProjectName.getText().toString().trim(), db);
             }
         });
@@ -81,12 +81,6 @@ public class CreateProjectFragment extends Fragment implements ProjectView {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.onDestroy();
-    }
-
     void hideKeyboard(Context context) {
         InputMethodManager manager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         View view = ((Activity) context).getCurrentFocus();
@@ -94,5 +88,11 @@ public class CreateProjectFragment extends Fragment implements ProjectView {
             return;
         assert manager != null;
         manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 }
